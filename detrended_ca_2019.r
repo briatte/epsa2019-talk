@@ -191,16 +191,17 @@ ggplot(res, aes(DCA1, DCA2, color = party)) +
 ggsave("plots/dca_2d_2019.png", width = 7, height = 5)
 ggsave("plots/dca_2d_2019.pdf", width = 7, height = 5)
 
-ggplot(res, aes(DCA1, DCA2, color = party)) +
-  geom_point(data = select(res, -party), color = "grey", alpha = .25) +
+ggplot(res, aes(DCA1, DCA2), color = "grey75") +
+  geom_point(data = select(res, -party), color = "grey50", alpha = .25) +
+  geom_point(data = mutate(res, party = "(all)"), color = "grey50", alpha = .25) +
   geom_point() +
-  geom_point(data = mutate(res, party = "(all)")) +
-  scale_color_manual("", breaks = names(colors), values = colors) +
+  geom_vline(xintercept = mean(res$DCA1), lty = "dotted") +
+  geom_hline(yintercept = mean(res$DCA2), lty = "dotted") +
   facet_wrap(~ party) +
   theme_paper
 
-ggsave("plots/dca_2d_by_party_2019.png", width = 7, height = 5)
-ggsave("plots/dca_2d_by_party_2019.pdf", width = 7, height = 5)
+ggsave("plots/dca_2d_by_party_2019.png", width = 10, height = 9)
+ggsave("plots/dca_2d_by_party_2019.pdf", width = 10, height = 9)
 
 # ------------------------------------------------------------------------------
 # boxplots of dimension 1 for selected parties
