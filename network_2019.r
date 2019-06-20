@@ -8,6 +8,14 @@ library(readr)
 library(dplyr)
 
 # ------------------------------------------------------------------------------
+# colors for party affiliations
+# ------------------------------------------------------------------------------
+
+p <- read_csv("data/parties-june2019.csv")
+colors = p$color
+names(colors) = p$party
+
+# ------------------------------------------------------------------------------
 # politicians sample
 # ------------------------------------------------------------------------------
 
@@ -24,7 +32,7 @@ d <- cols(
   age              = col_integer(), # number of days
   created          = col_integer()  # year
 )
-d <- read_csv("data/politicians_sample.csv") %>% 
+d <- read_csv("data/politicians-june2019.csv") %>% 
   rename(
     name2015 = name.x, # 2015, standardized to first_name FAMILY_NAME
     name2019 = name.y,
@@ -36,10 +44,10 @@ d <- read_csv("data/politicians_sample.csv") %>%
 # create network object
 # ------------------------------------------------------------------------------
 
-f <- "epsa2019/data/network2019.rds"
+f <- "data/network2019.rds"
 if (!file.exists(f)) {
   
-  y <- readRDS("epsa2019/data/matrix2019.rds")
+  y <- readRDS("data/matrix2019.rds")
   
   # one-mode (symmetric) adjacency matrix
   a <- t(y) %*% y
@@ -115,7 +123,7 @@ ggraph(n, layout = "fr") +
   guides(edge_alpha = FALSE) +
   ggraph::theme_graph(base_family = "")
 
-ggsave("epsa2019/plots/network2019.pdf", width = 10, height = 9)
-ggsave("epsa2019/plots/network2019.png", width = 10, height = 9)
+ggsave("plots/network2019.pdf", width = 10, height = 9)
+ggsave("plots/network2019.png", width = 10, height = 9)
 
 # have a nice day
