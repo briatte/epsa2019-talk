@@ -2,6 +2,8 @@
 .DS_Store
 *draft*
 
+plots/png/*
+
 # History files
 .Rhistory
 .Rapp.history
